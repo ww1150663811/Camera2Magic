@@ -21,10 +21,22 @@ jobs:
         run: cd Camera2Magic-1.1.2-fix && chmod +x gradlew
       
       - name: Build Debug APK
-        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug
+        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug 2>&1 | tee build.log
+      
+      - name: Show Kotlin errors
+        if: failure()
+        run: grep -i "e:\|error:" Camera2Magic-1.1.2-fix/build.log || echo "No match found"
       
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: Camera2Magic-1.1.2-fix/app/build/outputs/apk/debug/*.apk
+      
+      - name: Upload build log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: Camera2Magic-1.1.2-fix/build.log
