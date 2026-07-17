@@ -21,13 +21,10 @@ jobs:
         run: cd Camera2Magic-1.1.2-fix && chmod +x gradlew
       
       - name: Build Debug APK
-        continue-on-error: true
-        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug --info
+        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug
       
-      - name: Upload Build Reports
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: build-reports
-          path: |
-            Camera2Magic-1.1.2-fix/app/build/reports/
-            Camera2Magic-1.1.2-fix/build/reports/
+          name: app-debug
+          path: Camera2Magic-1.1.2-fix/app/build/outputs/apk/debug/*.apk
