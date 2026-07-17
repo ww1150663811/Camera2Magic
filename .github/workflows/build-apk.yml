@@ -21,10 +21,11 @@ jobs:
         run: cd Camera2Magic-1.1.2-fix && chmod +x gradlew
       
       - name: Build Debug APK
-        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug --stacktrace
+        run: cd Camera2Magic-1.1.2-fix && ./gradlew assembleDebug --info
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: app-debug
           path: Camera2Magic-1.1.2-fix/app/build/outputs/apk/debug/*.apk
